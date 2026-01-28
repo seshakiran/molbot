@@ -37,7 +37,10 @@ else
     # Move binaries to install dir
     # The tarball extracts to a folder named sherpa-onnx-v...-linux-x64/bin
     cp /tmp/sherpa-onnx-v${SHERPA_VERSION}-linux-x64/bin/sherpa-onnx-offline-tts "$INSTALL_DIR/"
-    cp /tmp/sherpa-onnx-v${SHERPA_VERSION}-linux-x64/bin/sherpa-onnx-offline-dspt "$INSTALL_DIR/" || true # Some versions might not have this, optional
+    cp /tmp/sherpa-onnx-v${SHERPA_VERSION}-linux-x64/bin/sherpa-onnx-offline-dspt "$INSTALL_DIR/" || true 
+    
+    # Create symlink for compatibility with Walkie-Talkie skill which expects 'sherpa-onnx-tts'
+    ln -sf "$INSTALL_DIR/sherpa-onnx-offline-tts" "$INSTALL_DIR/sherpa-onnx-tts"
     
     # Cleanup
     rm -rf /tmp/sherpa-onnx*

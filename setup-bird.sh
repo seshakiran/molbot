@@ -9,20 +9,22 @@ CONFIG_FILE="$CONFIG_DIR/config.json5"
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+# Credentials (PASTE YOUR VALUES HERE)
+AUTH_TOKEN="YOUR_AUTH_TOKEN_HERE"
+CT0="YOUR_CT0_HERE"
+
 echo -e "${GREEN}=========================================${NC}"
 echo -e "${GREEN}      Bird CLI Configuration Setup       ${NC}"
 echo -e "${GREEN}=========================================${NC}"
 
-echo "This script will save your Twitter credentials for the 'bird' tool."
-echo "You need your 'auth_token' and 'ct0' cookies from your browser."
+echo "Configuring bird with provided credentials..."
 echo ""
 
-# Prompt for credentials
-read -sp "Enter your 'auth_token': " AUTH_TOKEN
-echo ""
-read -sp "Enter your 'ct0': " CT0
-echo ""
-echo ""
+# Validate that user updated the script
+if [[ "$AUTH_TOKEN" == "YOUR_AUTH_TOKEN_HERE" ]]; then
+    echo -e "${RED}ERROR: You must edit this script and paste your auth_token and ct0 first!${NC}"
+    exit 1
+fi
 
 # Create directory
 mkdir -p "$CONFIG_DIR"

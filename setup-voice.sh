@@ -3,7 +3,8 @@ set -e
 
 # Configuration
 SHERPA_VERSION="1.10.30"
-SHERPA_RELEASE_URL="https://github.com/k2-fsa/sherpa-onnx/releases/download/v${SHERPA_VERSION}/sherpa-onnx-v${SHERPA_VERSION}-linux-x64.tar.bz2"
+# NOTE: The release filename includes '-static' for Linux x64
+SHERPA_RELEASE_URL="https://github.com/k2-fsa/sherpa-onnx/releases/download/v${SHERPA_VERSION}/sherpa-onnx-v${SHERPA_VERSION}-linux-x64-static.tar.bz2"
 MODEL_NAME="vits-piper-en_US-amy-low"
 MODEL_URL="https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/${MODEL_NAME}.tar.bz2"
 
@@ -35,9 +36,11 @@ else
     tar -xjf /tmp/sherpa-onnx.tar.bz2 -C /tmp
     
     # Move binaries to install dir
-    # The tarball extracts to a folder named sherpa-onnx-v...-linux-x64/bin
-    cp /tmp/sherpa-onnx-v${SHERPA_VERSION}-linux-x64/bin/sherpa-onnx-offline-tts "$INSTALL_DIR/"
-    cp /tmp/sherpa-onnx-v${SHERPA_VERSION}-linux-x64/bin/sherpa-onnx-offline-dspt "$INSTALL_DIR/" || true 
+    # The tarball likely extracts to a folder with '-static' in the name
+    SOURCE_DIR="/tmp/sherpa-onnx-v${SHERPA_VERSION}-linux-x64-static/bin"
+    
+    cp "$SOURCE_DIR/sherpa-onnx-offline-tts" "$INSTALL_DIR/"
+    cp "$SOURCE_DIR/sherpa-onnx-offline-dspt" "$INSTALL_DIR/" || true 
     
     # Create symlink for compatibility with Walkie-Talkie skill which expects 'sherpa-onnx-tts'
     ln -sf "$INSTALL_DIR/sherpa-onnx-offline-tts" "$INSTALL_DIR/sherpa-onnx-tts"
